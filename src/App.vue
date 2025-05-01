@@ -24,6 +24,24 @@
       <TodoItem v-for="todo in filteredTodos" :key="todo.id" :todo="todo" @delete="deleteTodo" @toggle="toggleTodo"
         @edit="editTodo" />
     </ul>
+     <!-- ✅ Tabel kegiatan selesai -->
+     <div v-if="completedTodos.length" class="completed-table">
+      <h2>Kegiatan Selesai</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Kegiatan</th>
+            <th>Waktu Selesai</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="todo in completedTodos" :key="todo.id">
+            <td>{{ todo.text }}</td>
+            <td>{{ formatDate(todo.completedAt) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -84,6 +102,10 @@ export default {
     const hasCompletedTasks = computed(() => {
       return todos.value.some(todo => todo.done)
     })
+     //Ambil hanya kegiatan yang sudah selesai
+     const completedTodos = computed(() =>
+      todos.value.filter(todo => todo.done && todo.completedAt)
+    )
 
      //Format waktu selesai
      const formatDate = (timestamp) => {
@@ -102,6 +124,7 @@ export default {
       showOnlyPending,
       filteredTodos,
       hasCompletedTasks,
+      completedTodos, //return ke template
       formatDate //return ke template
     }
   }
@@ -415,5 +438,22 @@ ul li {
   .delete-btn {
     flex: 1;
   }
+}
+
+/*gaya tabel selesai */
+.completed-table {
+  margin-top: 2rem;
+}
+.completed-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.completed-table th,
+.completed-table td {
+  border: 1px solid #000000;
+  padding: 0.5rem;
+}
+.completed-table th {
+  background-color: #4ec7f3;
 }
 </style>
