@@ -48,7 +48,8 @@ export default {
       todos.value.push({
         id: Date.now(),
         text,
-        done: false
+        done: false,
+        completedAt: null //Tambahkan field waktu selesai
       })
 
       newTodo.value = ''
@@ -61,6 +62,8 @@ export default {
     const toggleTodo = (id) => {
       const todo = todos.value.find(t => t.id === id)
       if (todo) todo.done = !todo.done
+      //Simpan waktu saat ditandai selesai
+      todo.completedAt = todo.done ? Date.now() : null
     }
 
     const editTodo = ({ id, text }) => {
@@ -82,6 +85,12 @@ export default {
       return todos.value.some(todo => todo.done)
     })
 
+     //Format waktu selesai
+     const formatDate = (timestamp) => {
+      const date = new Date(timestamp)
+      return date.toLocaleString()
+    }
+
     return {
       newTodo,
       todos,
@@ -92,7 +101,8 @@ export default {
       clearCompleted,
       showOnlyPending,
       filteredTodos,
-      hasCompletedTasks
+      hasCompletedTasks,
+      formatDate //return ke template
     }
   }
 }
