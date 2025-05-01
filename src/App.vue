@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- Perubahan nama container-->
-    <h1>Daftar Kegiatan Hari ini</h1>
+    <h1>Daftar Kegiatan Hari Ini</h1>
 
     <form @submit.prevent="addTodo">
       <input type="text" v-model="newTodo" placeholder="Tambah kegiatan..." />
@@ -11,11 +11,11 @@
     <div class="filters">
       <label class="filter-option">
         <input type="checkbox" v-model="showOnlyPending" />
-        Tampilkan hanya yang belum selesai
+        Tampilkan yang belum selesai <!--perubahan nama-->
       </label>
 
       <button class="clear-completed" @click="clearCompleted" :disabled="!hasCompletedTasks">
-        Hapus semua yang selesai
+        Hapus yang selesai <!--perubahan nama-->
       </button>
     </div>
 
@@ -24,7 +24,7 @@
       <TodoItem v-for="todo in filteredTodos" :key="todo.id" :todo="todo" @delete="deleteTodo" @toggle="toggleTodo"
         @edit="editTodo" />
     </ul>
-     <!-- ✅ Tabel kegiatan selesai -->
+     <!--Tabel kegiatan selesai -->
      <div v-if="completedTodos.length" class="completed-table">
       <h2>Kegiatan Selesai</h2>
       <table>
