@@ -1,22 +1,16 @@
 <template>
   <li>
     <div v-if="isEditing" class="edit-container">
-      <input 
-        type="text" 
-        v-model="editText" 
-        @keyup.enter="saveEdit" 
-        ref="editInput"
-      />
+      <input type="text" v-model="editText" @keyup.enter="saveEdit" ref="editInput" />
       <div class="edit-buttons">
         <button class="save-btn" @click="saveEdit">Simpan</button>
         <button class="cancel-btn" @click="cancelEdit">Batal</button>
       </div>
     </div>
     <div v-else class="todo-content">
-      <span
-        :style="{ textDecoration: todo.done ? 'line-through' : 'none' }"
-        @click="$emit('toggle', todo.id)"
-      >
+      <!-- penambahan check box-->
+      <input type="checkbox" :checked="todo.done" @change="$emit('toggle', todo.id)" />
+      <span :style="{ textDecoration: todo.done ? 'line-through' : 'none' }" @click="$emit('toggle', todo.id)">
         {{ todo.text }}
       </span>
       <div class="action-buttons">
