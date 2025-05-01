@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <h1>Daftar Kegiatan</h1>
-    
+    <!-- Perubahan nama container-->
+    <h1>Daftar Kegiatan Hari ini</h1>
+
     <form @submit.prevent="addTodo">
       <input type="text" v-model="newTodo" placeholder="Tambah kegiatan..." />
       <button type="submit">Tambah</button>
@@ -12,26 +13,16 @@
         <input type="checkbox" v-model="showOnlyPending" />
         Tampilkan hanya yang belum selesai
       </label>
-      
-      <button 
-        class="clear-completed" 
-        @click="clearCompleted" 
-        :disabled="!hasCompletedTasks"
-      >
+
+      <button class="clear-completed" @click="clearCompleted" :disabled="!hasCompletedTasks">
         Hapus semua yang selesai
       </button>
     </div>
 
     <ul>
       <li v-if="filteredTodos.length === 0" class="empty-message">Belum ada kegiatan</li>
-      <TodoItem
-        v-for="todo in filteredTodos"
-        :key="todo.id"
-        :todo="todo"
-        @delete="deleteTodo"
-        @toggle="toggleTodo"
-        @edit="editTodo"
-      />
+      <TodoItem v-for="todo in filteredTodos" :key="todo.id" :todo="todo" @delete="deleteTodo" @toggle="toggleTodo"
+        @edit="editTodo" />
     </ul>
   </div>
 </template>
@@ -71,12 +62,12 @@ export default {
       const todo = todos.value.find(t => t.id === id)
       if (todo) todo.done = !todo.done
     }
-    
+
     const editTodo = ({ id, text }) => {
       const todo = todos.value.find(t => t.id === id)
       if (todo) todo.text = text
     }
-    
+
     const clearCompleted = () => {
       todos.value = todos.value.filter(todo => !todo.done)
     }
@@ -86,7 +77,7 @@ export default {
         ? todos.value.filter(todo => !todo.done)
         : todos.value
     })
-    
+
     const hasCompletedTasks = computed(() => {
       return todos.value.some(todo => todo.done)
     })
@@ -108,7 +99,6 @@ export default {
 </script>
 
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 * {
@@ -351,8 +341,15 @@ ul li span[style*="line-through"] {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 ul li {
@@ -363,48 +360,49 @@ ul li {
   .container {
     padding: 20px 15px;
   }
-  
+
   h1 {
     font-size: 24px;
   }
-  
+
   form {
     flex-direction: column;
   }
-  
+
   input[type="text"] {
     border-radius: 6px;
     margin-bottom: 10px;
   }
-  
+
   form button {
     border-radius: 6px;
     width: 100%;
   }
-  
+
   .filters {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .clear-completed {
     width: 100%;
     text-align: center;
     margin-top: 10px;
   }
-  
+
   .todo-content {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
-  
+
   .action-buttons {
     width: 100%;
     justify-content: space-between;
   }
-  
-  .edit-btn, .delete-btn {
+
+  .edit-btn,
+  .delete-btn {
     flex: 1;
   }
 }
