@@ -13,6 +13,11 @@
       <span :style="{ textDecoration: todo.done ? 'line-through' : 'none' }" @click="$emit('toggle', todo.id)">
         {{ todo.text }}
       </span>
+      <!--Menampilkan waktu selesai jika sudah selesai -->
+      <span v-if="todo.done && todo.completedAt" class="completed-time">
+        (Selesai: {{ formatTime(todo.completedAt) }})
+      </span>
+
       <div class="action-buttons">
         <button class="edit-btn" @click="startEdit">Edit</button>
         <button class="delete-btn" @click="$emit('delete', todo.id)">Hapus</button>
@@ -52,6 +57,11 @@ export default {
     },
     cancelEdit() {
       this.isEditing = false
+    },
+    //Fungsi untuk memformat waktu penyelesaian
+    formatTime(timestamp) {
+      const date = new Date(timestamp)
+      return date.toLocaleString()
     }
   }
 }
